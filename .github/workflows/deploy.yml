@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install requirements
-      run: pip install -r server/requirements.txt
+      run: pip3 install -r server/requirements.txt
 
     - name: hi
       run: python --version
@@ -20,7 +20,7 @@ jobs:
       run: python3 --version
 
     - name: Run tests
-      run: python server/test_drawing.py
+      run: python3 server/test_drawing.py
 
   deploy:
     name: Deploy to Google Cloud Run
@@ -32,7 +32,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install requirements
-      run: pip install -r server/requirements.txt
+      run: pip3 install -r server/requirements.txt
 
     #- name: Build project
     #  run: mvn package
