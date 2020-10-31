@@ -24,7 +24,9 @@ jobs:
       run: python3 --version
 
     - name: Run tests
-      run: python3 server/test_drawing.py
+      run: |
+        cd server
+        python3 test_drawing.py
 
   deploy:
     name: Deploy to Google Cloud Run
