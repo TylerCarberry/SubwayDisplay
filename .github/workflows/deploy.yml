@@ -1,0 +1,40 @@
+name: Build and Deploy
+
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run tests
+      run: python server/test_drawing.py
+
+  deploy:
+    name: Deploy to Google Cloud Run
+    runs-on: ubuntu-latest
+    needs: [test]
+    #if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    #- name: Build project
+    #  run: mvn package
+
+    - name: Authenticate gcloud service account
+      run: |
+        gcloud config set project subwaydisplay
+        gcloud config set account subway-service-account@subwaydisplay.iam.gserviceaccount.com
+        echo ${{ secrets.GCLOUD_API_BASE64 }} | base64 --decode > gcloud.json
+        gcloud auth activate-service-account --key-file=gcloud.json --project=subwaydisplay
+
+    - name: Submit build to Google Cloud
+      run: gcloud builds submit --tag gcr.io/subwaydisplay/helloworld
+
+    - name: Deploy to Google Cloud Run
+      run: gcloud beta run deploy helloworld --image gcr.io/subwaydisplay/helloworld --platform managed --allow-unauthenticated --region us-east1
+  
