@@ -2,7 +2,7 @@
 Displays subway arrival times on a Kindle Touch
 
 
-<img width="450" alt="Example screenshot" src="https://user-images.githubusercontent.com/6628497/97786594-03011380-1b83-11eb-8dd2-4eaa0f7516c0.png">     - - - -    <img width="450" alt="Example covid overnight" src="https://user-images.githubusercontent.com/6628497/97786660-799e1100-1b83-11eb-91fc-083481a92e99.png">
+<img width="600" alt="Example screenshot" src="https://user-images.githubusercontent.com/6628497/97786594-03011380-1b83-11eb-8dd2-4eaa0f7516c0.png">
 
 
 
