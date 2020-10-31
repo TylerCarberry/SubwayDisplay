@@ -22,19 +22,26 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Install requirements
+      run: pip install -r server/requirements.txt
+
     #- name: Build project
     #  run: mvn package
 
     - name: Authenticate gcloud service account
       run: |
+        cd server
         gcloud config set project subwaydisplay
         gcloud config set account subway-service-account@subwaydisplay.iam.gserviceaccount.com
         echo ${{ secrets.GCLOUD_API_BASE64 }} | base64 --decode > gcloud.json
         gcloud auth activate-service-account --key-file=gcloud.json --project=subwaydisplay
 
     - name: Submit build to Google Cloud
-      run: gcloud builds submit --tag gcr.io/subwaydisplay/helloworld
+      run: |
+        cd server
+        gcloud builds submit --tag gcr.io/subwaydisplay/helloworld
 
     - name: Deploy to Google Cloud Run
-      run: gcloud beta run deploy helloworld --image gcr.io/subwaydisplay/helloworld --platform managed --allow-unauthenticated --region us-east1
-  
+      run: |
+        cd server
+        gcloud beta run deploy helloworld --image gcr.io/subwaydisplay/helloworld --platform managed --allow-unauthenticated --region us-east1
