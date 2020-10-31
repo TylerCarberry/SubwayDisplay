@@ -1,5 +1,6 @@
 import os
 import drawing
+import nltk
 
 TOP_NORTH_NAME = "Uptown"
 TOP_SOUTH_NAME = "Downtown"
@@ -11,6 +12,13 @@ SUBTITLE_SHORT = "Also 1:23"
 SUBTITLE_LONG = "Also 10:10, 11:11, 11:23, 11:55"
 
 CLOSED_CLEANING_ALERT = 'The subway is closed each night between 1 AM and 5 AM while we clean our trains and stations.    We are running extra bus service overnight, including new interborough routes.      Plan your bus trip on our homepage  . Be sure to set the time for your overnight trip, and select &quotbus&quot and &quotexpress bus&quot under Travel Preferences.'
+
+nltk.download('punkt')
+
+try:
+    os.mkdir("test")
+except:
+    pass
 
 try:
     os.mkdir("test/output")
