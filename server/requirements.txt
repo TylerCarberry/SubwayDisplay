@@ -1,6 +1,6 @@
 gtfs-realtime-bindings~=0.0.6
 requests~=2.24.0
-Pillow~=7.2.0
+Pillow
 Flask~=1.1.2
 nltk~=3.5
 google-cloud-storage~=1.32.0

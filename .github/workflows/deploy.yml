@@ -13,6 +13,12 @@ jobs:
     - name: Install requirements
       run: pip install -r server/requirements.txt
 
+    - name: hi
+      run: python --version
+
+    - name: hi3
+      run: python3 --version
+
     - name: Run tests
       run: python server/test_drawing.py
 
