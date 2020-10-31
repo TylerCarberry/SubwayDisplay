@@ -10,6 +10,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Install setup tools
+      uses: sudo apt-get install -y python3-setuptools
+
+
     - name: Install requirements
       run: pip3 install -r server/requirements.txt
 
