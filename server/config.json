@@ -1,0 +1,16 @@
+{
+  "lines": [
+    {
+      "stop_id": "A28",
+      "name": "A",
+      "uptown_name": "Uptown",
+      "downtown_name": "Downtown"
+    },
+    {
+      "stop_id": "A28",
+      "name": "E",
+      "uptown_name": "Uptown",
+      "downtown_name": "Downtown"
+    }
+  ]
+}
