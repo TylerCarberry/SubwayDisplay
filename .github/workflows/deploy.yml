@@ -37,11 +37,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Install setup tools
+      run: sudo apt-get install -y python3-setuptools
+
     - name: Install requirements
       run: pip3 install -r server/requirements.txt
-
-    #- name: Build project
-    #  run: mvn package
 
     - name: Authenticate gcloud service account
       run: |
