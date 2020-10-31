@@ -59,7 +59,7 @@ def generate_image():
     titles = []
     for index, line in enumerate(config["lines"]):
         titles.append(get_header_text(line["uptown_name"], upcoming_arrival_times[index*2]))
-        titles.append(get_header_text(line["uptown_name"], upcoming_arrival_times[index*2 + 1]))
+        titles.append(get_header_text(line["downtown_name"], upcoming_arrival_times[index*2 + 1]))
 
     drawing.create_image(
         alerts.get_alerts_for_line(config["lines"][0]["name"], include_weekend_service=True),

@@ -36,6 +36,12 @@ jobs:
     - name: Install requirements
       run: pip3 install -r server/requirements.txt
 
+    - name: Override config file
+      run: |
+        cd server
+        rm config.json
+        echo ${{ secrets.CONFIG_BASE64 }} | base64 --decode > config.json
+
     - name: Authenticate gcloud service account
       run: |
         cd server

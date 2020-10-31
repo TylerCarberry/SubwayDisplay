@@ -53,8 +53,8 @@ disable_wifi() {
 }
 
 cd "$(dirname "$0")" || exit
-enable_screensaver
-#disable_screensaver
+#enable_screensaver
+disable_screensaver
 
 enable_wifi
 sleep 15
