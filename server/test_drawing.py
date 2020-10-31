@@ -16,6 +16,11 @@ CLOSED_CLEANING_ALERT = 'The subway is closed each night between 1 AM and 5 AM w
 nltk.download('punkt')
 
 try:
+    os.mkdir("test")
+except:
+    pass
+
+try:
     os.mkdir("test/output")
 except:
     pass
