@@ -50,6 +50,10 @@ jobs:
         echo ${{ secrets.GCLOUD_API_BASE64 }} | base64 --decode > gcloud.json
         gcloud auth activate-service-account --key-file=gcloud.json --project=subwaydisplay
 
+    - name: Upload kindle file to gcloud
+      run: |
+        - gsutil cp kindle/refresh_display.sh gs://subwaykindledisplay/
+
     - name: Submit build to Google Cloud
       run: |
         cd server

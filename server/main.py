@@ -4,6 +4,7 @@ import alerts
 import drawing
 from datetime import datetime
 import json
+import utils
 
 import format_for_kindle
 import gcloud
@@ -44,8 +45,7 @@ def get_header_text(direction_name, upcoming_timestamps):
 def generate_image():
     output = mta.fetch_mta()
 
-    with open('config.json') as f:
-        config = json.load(f)
+    config = utils.get_config_file()
 
     upcoming_arrival_times = []
     for line in config["lines"]:

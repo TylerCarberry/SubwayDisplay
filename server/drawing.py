@@ -11,6 +11,7 @@ import utils
 
 DEFAULT_LEFT_POS = 220
 LEFT_POS_ALERT = 320
+MAX_ALERTS_TO_SHOW = 5
 
 BLACK_COLOR = (0, 0, 0)
 
@@ -47,27 +48,17 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file = OUT
         x_top = 95
         icon_left = 50
 
-    in_file = "res/background.png"
-
     left_pos = LEFT_POS_ALERT if active_alert else DEFAULT_LEFT_POS
-
+    in_file = "res/background.png"
     img = Image.open(in_file)
-
-
-
-
-    with open('config.json') as f:
-        config = json.load(f)
+    config = utils.get_config_file()
 
     ICON_DIMENSIONS = (120, 120)
     icon1 = Image.open("res/lines/{}.png".format(config["lines"][0]["name"].lower())).resize(ICON_DIMENSIONS)
     icon2 = Image.open("res/lines/{}.png".format(config["lines"][1]["name"].lower())).resize(ICON_DIMENSIONS)
 
-
     img.paste(icon1, (icon_left, x_top), mask=icon1)
     img.paste(icon2, (icon_left, x_top + 305), mask=icon2)
-
-
 
     draw = ImageDraw.Draw(img)
 
@@ -86,7 +77,6 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file = OUT
     draw.text((left_pos, 460+SUBTITLE_MARGIN), subtitles[3], BLACK_COLOR, font=SMALL_FONT)
 
     line_height = 55 if max(len(top_alerts), len(bottom_alerts)) > 3 else 80
-    MAX_ALERTS_TO_SHOW = 5
 
     start_y = 300 if long_alert else 420
     for alert_num, l_alert in enumerate(top_alerts[:MAX_ALERTS_TO_SHOW]):

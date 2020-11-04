@@ -12,5 +12,8 @@
       "uptown_name": "Uptown",
       "downtown_name": "Downtown"
     }
-  ]
+  ],
+  "kindle": {
+    "angle": 90
+  }
 }
