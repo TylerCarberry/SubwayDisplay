@@ -52,7 +52,7 @@ jobs:
 
     - name: Upload kindle file to gcloud
       run: |
-        - gsutil cp kindle/refresh_display.sh gs://subwaykindledisplay/
+        gsutil cp kindle/refresh_display.sh gs://subwaykindledisplay/
 
     - name: Submit build to Google Cloud
       run: |
