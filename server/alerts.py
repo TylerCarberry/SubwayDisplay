@@ -3,6 +3,7 @@ import re
 import requests
 from google.transit import gtfs_realtime_pb2
 import time
+import utils
 
 MTA_API_KEY = os.environ["MTA_API_KEY"]
 
@@ -48,12 +49,12 @@ def get_alerts_for_line(line, include_weekend_service=False):
 
 def is_alert_active(alert):
     try:
-        if alert.active_period.end < time.time():
+        if alert.active_period.end < utils.get_current_time():
             return False
     except:
         pass
     try:
-        if alert.active_period.start > time.time() + UPCOMING_ALERT_SECONDS:
+        if alert.active_period.start > utils.get_current_time() + UPCOMING_ALERT_SECONDS:
             return False
     except:
         pass

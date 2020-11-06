@@ -1,4 +1,6 @@
 import os
+import time
+
 import nltk
 import alerts
 import drawing
@@ -73,10 +75,16 @@ def generate_image():
 
 @app.route('/')
 def hello_world():
-    generate_image()
-    gcloud.upload_blob("output2.png", "image.png")
+    current_time = time.time()
+    for photo_num in range(5):
+        make_image_for_timestamp(current_time + photo_num * 60)
+        gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
     return send_file("output2.png", cache_timeout=1)
 
+
+def make_image_for_timestamp(timestamp):
+    utils.current_time = timestamp
+    generate_image()
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

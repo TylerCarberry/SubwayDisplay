@@ -1,11 +1,5 @@
 #!/bin/sh
 
-FULL_REFRESH_INTERVAL_MINUTES=10
-DOWNLOADED_IMAGE_FILE_NAME=image.png
-IMAGE_URL=http://storage.googleapis.com/subwaykindledisplay/image.png
-
-download_successful=1
-
 disable_screensaver() {
   stop framework
   lipc-set-prop -i com.lab126.powerd preventScreenSaver 1
@@ -21,27 +15,27 @@ enable_screensaver() {
 # Download the image from the server
 # The kindle is missing SSL libraries and curl only works with http, not https
 download_image() {
+  file_name=$1
+  url=$2
+
   # Remove the file if it exists
-  [ -f $DOWNLOADED_IMAGE_FILE_NAME ] && rm $DOWNLOADED_IMAGE_FILE_NAME
+  [ -f $file_name ] && rm $file_name
 
   # The key is used to prevent caching
   current_timestamp=$(date '+%s')
-  #curl -H 'Cache-Control: no-cache' $IMAGE_URL?key=$current_timestamp > $DOWNLOADED_IMAGE_FILE_NAME
-
-  if curl -H 'Cache-Control: no-cache' $IMAGE_URL?key=$current_timestamp > $DOWNLOADED_IMAGE_FILE_NAME
-    then download_successful=1
-    else download_successful=0
-  fi
+  curl -H 'Cache-Control: no-cache' $url?key=$current_timestamp > $file_name
 }
 
 partially_refresh_screen() {
-  eips -g $DOWNLOADED_IMAGE_FILE_NAME
+  file_name=$1
+  eips -g $file_name
 }
 
 # -f causes a full image refresh
 # -g indicates the image is a jpg/png. -b for bitmap images
 fully_refresh_screen() {
-  eips -f -g $DOWNLOADED_IMAGE_FILE_NAME
+  file_name=$1
+  eips -f -g $file_name
 }
 
 enable_wifi() {
@@ -58,23 +52,19 @@ disable_screensaver
 
 enable_wifi
 sleep 15
-download_image
+download_image image0.png http://storage.googleapis.com/subwaykindledisplay/image0.png
+download_image image1.png http://storage.googleapis.com/subwaykindledisplay/image1.png
+download_image image2.png http://storage.googleapis.com/subwaykindledisplay/image2.png
+download_image image3.png http://storage.googleapis.com/subwaykindledisplay/image3.png
+download_image image4.png http://storage.googleapis.com/subwaykindledisplay/image4.png
 disable_wifi
 
-#if $download_successful
-#  then disable_screensaver
-#  else enable_screensaver
-#fi
-
-# Display the image
-current_minute=$(date +"%M")
-if [ $((current_minute%$FULL_REFRESH_INTERVAL_MINUTES)) -eq 0 ];
-then
-    fully_refresh_screen
-else
-    partially_refresh_screen
-fi
-
-#sleep 20
-#download_image
-#partially_refresh_screen
+fully_refresh_screen image0.png
+sleep 60
+partially_refresh_screen image1.png
+sleep 60
+partially_refresh_screen image2.png
+sleep 60
+partially_refresh_screen image3.png
+sleep 60
+partially_refresh_screen image4.png
