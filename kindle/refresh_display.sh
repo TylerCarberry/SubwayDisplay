@@ -18,17 +18,36 @@ download_image() {
   file_name=$1
   url=$2
 
-  # Remove the file if it exists
-  [ -f $file_name ] && rm $file_name
+  remove_file_if_exists file_name
 
   # The key is used to prevent caching
   current_timestamp=$(date '+%s')
   curl -H 'Cache-Control: no-cache' $url?key=$current_timestamp > $file_name
 }
 
+remove_file_if_exists() {
+  file_name=$1
+  [ -f $file_name ] && rm $file_name
+}
+
 update_this_file() {
+  temp_file_name=/mnt/us/subway/temp_refresh_display.sh
+  actual_file_name=/mnt/us/subway/refresh_display.sh
+  minimum_file_size_bytes=1000
+
+  remove_file_if_exists $temp_file_name
+
   current_timestamp=$(date '+%s')
-  curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/refresh_display.sh?key=$current_timestamp >/mnt/us/subway/refresh_display.sh
+  curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/refresh_display.sh?key=$current_timestamp > $temp_file_name
+
+  if [ -f "$temp_file_name" ]; then
+      actualsize=$(wc -c < "$temp_file_name")
+      if [ $actualsize -ge $minimum_file_size_bytes ]; then
+          remove_file_if_exists $actual_file_name
+          mv $temp_file_name $actual_file_name
+      fi
+
+  fi
 }
 
 partially_refresh_screen() {
