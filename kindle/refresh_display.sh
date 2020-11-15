@@ -26,6 +26,11 @@ download_image() {
   curl -H 'Cache-Control: no-cache' $url?key=$current_timestamp > $file_name
 }
 
+update_this_file() {
+  current_timestamp=$(date '+%s')
+  curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/refresh_display.sh?key=$current_timestamp >/mnt/us/subway/refresh_display.sh
+}
+
 partially_refresh_screen() {
   file_name=$1
   eips -g $file_name
@@ -57,6 +62,7 @@ download_image image1.png http://storage.googleapis.com/subwaykindledisplay/imag
 download_image image2.png http://storage.googleapis.com/subwaykindledisplay/image2.png
 download_image image3.png http://storage.googleapis.com/subwaykindledisplay/image3.png
 download_image image4.png http://storage.googleapis.com/subwaykindledisplay/image4.png
+update_this_file
 disable_wifi
 
 fully_refresh_screen image0.png
