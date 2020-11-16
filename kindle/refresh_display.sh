@@ -18,16 +18,16 @@ download_image() {
   file_name=$1
   url=$2
 
-  remove_file_if_exists file_name
+  remove_file_if_exists "$file_name"
 
   # The key is used to prevent caching
   current_timestamp=$(date '+%s')
-  curl -H 'Cache-Control: no-cache' $url?key=$current_timestamp > $file_name
+  curl -H 'Cache-Control: no-cache' $url?key=$current_timestamp > "$file_name"
 }
 
 remove_file_if_exists() {
   file_name=$1
-  [ -f $file_name ] && rm $file_name
+  [ -f "$file_name" ] && rm "$file_name"
 }
 
 update_this_file() {
