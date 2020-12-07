@@ -70,6 +70,9 @@ disable_wifi() {
   lipc-set-prop com.lab126.cmd wirelessEnable 0
 }
 
+# Reboot the device every day at 4 AM
+currenttime=$(date +%H:%M)
+
 cd "$(dirname "$0")" || exit
 #enable_screensaver
 disable_screensaver
@@ -93,3 +96,7 @@ sleep 60
 partially_refresh_screen image3.png
 sleep 60
 partially_refresh_screen image4.png
+
+if [ "$currenttime" = "04:00" ]; then
+  reboot
+fi
