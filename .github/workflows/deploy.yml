@@ -10,6 +10,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
+
     - name: Install setup tools
       run: sudo apt-get install -y python3-setuptools
 
@@ -29,6 +34,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
 
     - name: Install setup tools
       run: sudo apt-get install -y python3-setuptools
