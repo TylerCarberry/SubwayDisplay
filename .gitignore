@@ -6,3 +6,5 @@ server/output.png
 server/output2.png
 server/__pycache__/
 server/test/output/
+
+venv/

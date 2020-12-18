@@ -60,6 +60,12 @@ jobs:
         cd server
         gcloud builds submit --tag gcr.io/subwaydisplay/helloworld
 
+    - name: Log to discord
+      run: apprise -vv -b "Deploying new version to Google Cloud Run" "discord://$DISCORD_WEBHOOK_ID/$DISCORD_WEBHOOK_TOKEN/?avatar=No"
+      env:
+        DISCORD_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
+        DISCORD_WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+
     - name: Deploy to Google Cloud Run
       run: |
         cd server

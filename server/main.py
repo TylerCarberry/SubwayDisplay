@@ -11,6 +11,7 @@ import utils
 import format_for_kindle
 import gcloud
 import mta
+import logs
 from utils import get_minutes_until_arrival
 from flask import send_file
 from flask import Flask
@@ -76,9 +77,12 @@ def generate_image():
 @app.route('/')
 def hello_world():
     current_time = time.time()
-    for photo_num in range(5):
+    for photo_num in range(5, -1, -1):
+        print(photo_num)
         make_image_for_timestamp(current_time + photo_num * 60)
         gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
+        #gcloud.upload_blob("output.png", "original_image{}.png".format(photo_num))
+    logs.post_to_discord(datetime.now().strftime("%B %m %Y - %H:%M:%S"), "", "output.png")
     return send_file("output2.png", cache_timeout=1)
 
 
