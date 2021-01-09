@@ -78,7 +78,11 @@ cd "$(dirname "$0")" || exit
 disable_screensaver
 
 enable_wifi
-sleep 15
+
+# Give the server time to generate the images and for the wifi to connect
+# It usually takes 20 seconds
+sleep 30
+
 download_image image0.png http://storage.googleapis.com/subwaykindledisplay/image0.png
 download_image image1.png http://storage.googleapis.com/subwaykindledisplay/image1.png
 download_image image2.png http://storage.googleapis.com/subwaykindledisplay/image2.png

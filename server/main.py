@@ -82,7 +82,7 @@ def hello_world():
         make_image_for_timestamp(current_time + photo_num * 60)
         gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
         #gcloud.upload_blob("output.png", "original_image{}.png".format(photo_num))
-    logs.post_to_discord(datetime.now().strftime("%B %m %Y - %H:%M:%S"), "", "output.png")
+    logs.post_to_discord(datetime.now().strftime("%B %d %Y - %H:%M:%S"), "", "output.png")
     return send_file("output2.png", cache_timeout=1)
 
 
