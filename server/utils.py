@@ -4,6 +4,7 @@ import time
 
 current_time = None
 
+
 def ellipsis_string(string, max_length):
     if len(string) <= max_length:
         return string

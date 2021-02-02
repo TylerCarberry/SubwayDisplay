@@ -5,7 +5,6 @@ import nltk
 import alerts
 import drawing
 from datetime import datetime
-import json
 import utils
 
 import format_for_kindle
@@ -89,6 +88,7 @@ def hello_world():
 def make_image_for_timestamp(timestamp):
     utils.current_time = timestamp
     generate_image()
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
