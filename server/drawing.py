@@ -8,9 +8,6 @@ from nltk import sent_tokenize
 import utils
 
 
-ICON_DIMENSIONS = (120, 120)
-DEFAULT_LEFT_POS = 220
-LEFT_POS_ALERT = 320
 MAX_ALERTS_TO_SHOW = 5
 MAX_ALERT_LINE_LENGTH = 20
 
@@ -34,15 +31,16 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file=OUTPU
     is_active_alert = len(top_alerts) > 0 or len(bottom_alerts) > 0
     is_long_alert = max(len(top_alerts), len(bottom_alerts)) >= 3
 
-    icon_x_position = 90 if is_active_alert else 50
+    icon_dimensions = (120, 120) if is_active_alert else (140, 140)
+    icon_x_position = 90 if is_active_alert else 60
     top_icon_y_position = 10 if len(top_alerts) >= 3 else 60 if len(top_alerts) > 0 else 95
     bottom_icon_y_position = 10 if len(bottom_alerts) >= 3 else 60 if len(bottom_alerts) > 0 else 95
-    text_x_position = LEFT_POS_ALERT if is_active_alert else DEFAULT_LEFT_POS
+    text_x_position = 320 if is_active_alert else 250
 
     img = Image.open(BACKGROUND_FILE)
 
-    top_line_icon = Image.open("res/lines/{}.png".format(config["lines"][0]["name"].lower())).resize(ICON_DIMENSIONS)
-    bottom_line_icon = Image.open("res/lines/{}.png".format(config["lines"][1]["name"].lower())).resize(ICON_DIMENSIONS)
+    top_line_icon = Image.open("res/lines/{}.png".format(config["lines"][0]["name"].lower())).resize(icon_dimensions)
+    bottom_line_icon = Image.open("res/lines/{}.png".format(config["lines"][1]["name"].lower())).resize(icon_dimensions)
 
     img.paste(top_line_icon, (icon_x_position, top_icon_y_position), mask=top_line_icon)
     img.paste(bottom_line_icon, (icon_x_position, bottom_icon_y_position + 305), mask=bottom_line_icon)
