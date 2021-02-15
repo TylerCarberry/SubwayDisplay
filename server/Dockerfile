@@ -17,7 +17,7 @@ RUN pip install Flask gunicorn
 RUN pip install -r requirements.txt
 RUN apt-get update
 RUN apt-get -y install imagemagick --fix-missing
-RUN initialize_nltk.py
+RUN python initialize_nltk.py
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
