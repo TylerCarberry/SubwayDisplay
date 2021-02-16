@@ -9,14 +9,16 @@ import utils
 
 
 MAX_ALERTS_TO_SHOW = 5
-MAX_ALERT_LINE_LENGTH = 20
-SUBTITLE_MARGIN = 65
+MAX_ALERT_LINE_LENGTH = 23
+
+# Distance between the title and subtitle vertically
+SUBTITLE_MARGIN = 75
 
 BLACK_COLOR = (0, 0, 0)
 
-BIG_FONT = ImageFont.truetype('fonts/Roboto-Medium.ttf', 48)
-SMALL_FONT = ImageFont.truetype('fonts/Roboto-Regular.ttf', 30)
-ALERT_FONT = ImageFont.truetype('fonts/Roboto-Regular.ttf', 28)
+BIG_FONT = ImageFont.truetype('fonts/Roboto-Bold.ttf', 54)
+SMALL_FONT = ImageFont.truetype('fonts/Roboto-Medium.ttf', 30)
+ALERT_FONT = ImageFont.truetype('fonts/RobotoCondensed-Regular.ttf', 28)
 
 BACKGROUND_FILE = "res/background.png"
 OUTPUT_FILE = "output.png"
@@ -34,27 +36,27 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file=OUTPU
 
     is_active_alert = len(top_alerts) > 0 or len(bottom_alerts) > 0
     text_x_position = 320 if is_active_alert else 250
-    draw.text((text_x_position, 30), titles[0], BLACK_COLOR, font=BIG_FONT)
-    draw.text((text_x_position, 30+SUBTITLE_MARGIN), subtitles[0], BLACK_COLOR, font=SMALL_FONT)
+    draw.text((text_x_position, 20), titles[0], BLACK_COLOR, font=BIG_FONT)
+    draw.text((text_x_position, 20+SUBTITLE_MARGIN), subtitles[0], BLACK_COLOR, font=SMALL_FONT)
 
     draw.text((text_x_position, 160), titles[1], BLACK_COLOR, font=BIG_FONT)
     draw.text((text_x_position, 160+SUBTITLE_MARGIN), subtitles[1], BLACK_COLOR, font=SMALL_FONT)
 
-    draw.text((text_x_position, 330), titles[2], BLACK_COLOR, font=BIG_FONT)
-    draw.text((text_x_position, 330+SUBTITLE_MARGIN), subtitles[2], BLACK_COLOR, font=SMALL_FONT)
+    draw.text((text_x_position, 320), titles[2], BLACK_COLOR, font=BIG_FONT)
+    draw.text((text_x_position, 320+SUBTITLE_MARGIN), subtitles[2], BLACK_COLOR, font=SMALL_FONT)
 
     draw.text((text_x_position, 460), titles[3], BLACK_COLOR, font=BIG_FONT)
     draw.text((text_x_position, 460+SUBTITLE_MARGIN), subtitles[3], BLACK_COLOR, font=SMALL_FONT)
 
     alert_line_height = 55 if max(len(top_alerts), len(bottom_alerts)) > 3 else 80
 
-    start_y = 300 if len(top_alerts) > 3 else 420
+    start_y = 300 if len(top_alerts) >= 3 else 420
     for alert_num, l_alert in enumerate(top_alerts[:MAX_ALERTS_TO_SHOW]):
         l_alert_str = utils.ellipsis_string(l_alert, MAX_ALERT_LINE_LENGTH)
         w, h = ALERT_FONT.getsize(l_alert_str)
         draw.text(((300 - w) / 2, (start_y + alert_line_height * alert_num - h) / 2), l_alert_str, font=ALERT_FONT, fill="black")
 
-    start_y = 920 if len(bottom_alerts) > 3 else 1050
+    start_y = 920 if len(bottom_alerts) >= 3 else 1050
     for alert_num, g_alert in enumerate(bottom_alerts[:MAX_ALERTS_TO_SHOW]):
         g_alert_str = utils.ellipsis_string(g_alert, MAX_ALERT_LINE_LENGTH)
         w, h = ALERT_FONT.getsize(g_alert_str)
