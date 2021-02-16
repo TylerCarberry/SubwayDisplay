@@ -16,8 +16,8 @@ SUBTITLE_MARGIN = 75
 
 BLACK_COLOR = (0, 0, 0)
 
-BIG_FONT = ImageFont.truetype('fonts/Roboto-Bold.ttf', 54)
-SMALL_FONT = ImageFont.truetype('fonts/Roboto-Medium.ttf', 30)
+BIG_FONT = ImageFont.truetype('fonts/Roboto-Medium.ttf', 52)
+SMALL_FONT = ImageFont.truetype('fonts/Roboto-Regular.ttf', 30)
 ALERT_FONT = ImageFont.truetype('fonts/RobotoCondensed-Regular.ttf', 28)
 
 BACKGROUND_FILE = "res/background.png"
