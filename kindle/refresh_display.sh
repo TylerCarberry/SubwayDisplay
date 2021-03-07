@@ -89,7 +89,7 @@ download_image image2.png http://storage.googleapis.com/subwaykindledisplay/imag
 download_image image3.png http://storage.googleapis.com/subwaykindledisplay/image3.png
 download_image image4.png http://storage.googleapis.com/subwaykindledisplay/image4.png
 update_this_file
-disable_wifi
+#disable_wifi
 
 fully_refresh_screen image0.png
 sleep 60
