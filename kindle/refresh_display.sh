@@ -41,11 +41,11 @@ update_this_file() {
   curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/refresh_display.sh?key=$current_timestamp > $temp_file_name
 
   if [ -f "$temp_file_name" ]; then
-      actualsize=$(wc -c < "$temp_file_name")
-      if [ $actualsize -ge $minimum_file_size_bytes ]; then
-          remove_file_if_exists $actual_file_name
-          mv $temp_file_name $actual_file_name
-      fi
+    actualsize=$(wc -c < "$temp_file_name")
+    if [ $actualsize -ge $minimum_file_size_bytes ]; then
+      remove_file_if_exists $actual_file_name
+      mv $temp_file_name $actual_file_name
+    fi
 
   fi
 }
@@ -61,11 +61,11 @@ update_no_wifi_logo() {
   curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/no_wifi.png?key=$current_timestamp > $temp_file_name
 
   if [ -f "$temp_file_name" ]; then
-      actualsize=$(wc -c < "$temp_file_name")
-      if [ $actualsize -ge $minimum_file_size_bytes ]; then
-          remove_file_if_exists $actual_file_name
-          mv $temp_file_name $actual_file_name
-      fi
+    actualsize=$(wc -c < "$temp_file_name")
+    if [ $actualsize -ge $minimum_file_size_bytes ]; then
+      remove_file_if_exists $actual_file_name
+      mv $temp_file_name $actual_file_name
+    fi
   fi
 }
 
@@ -73,17 +73,13 @@ partially_refresh_screen() {
   file_name=$1
   minimum_file_size_bytes=1000
 
-  # If file exists
-  if [ -f file_name ]; then
-      actualsize=$(wc -c < "$file_name")
-      # If the file is large enough
-      if [ $actualsize -ge $minimum_file_size_bytes ]; then
-          eips -g $file_name
-          return
-      fi
+  actualsize=$(wc -c < "$file_name")
+  # If the file is large enough
+  if [ $actualsize -ge $minimum_file_size_bytes ]; then
+    eips -g $file_name
+  else
+    eips -g no_wifi.png
   fi
-
-  show_no_wifi
 }
 
 # -f causes a full image refresh
@@ -92,21 +88,13 @@ fully_refresh_screen() {
   file_name=$1
   minimum_file_size_bytes=1000
 
-  # If file exists
-  if [ -f file_name ]; then
-      actualsize=$(wc -c < "$file_name")
-      # If the file is large enough
-      if [ $actualsize -ge $minimum_file_size_bytes ]; then
-          eips -f -g $file_name
-          return
-      fi
+  actualsize=$(wc -c < "$file_name")
+  # If the file is large enough
+  if [ $actualsize -ge $minimum_file_size_bytes ]; then
+    eips -f -g $file_name
+  else
+    eips -f -g no_wifi.png
   fi
-
-  show_no_wifi
-}
-
-show_no_wifi() {
-  eips -f -g no_wifi.png
 }
 
 enable_wifi() {
