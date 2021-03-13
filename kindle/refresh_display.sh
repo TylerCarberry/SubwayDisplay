@@ -50,16 +50,63 @@ update_this_file() {
   fi
 }
 
+update_no_wifi_logo() {
+  temp_file_name=/mnt/us/subway/temp_no_wifi.png
+  actual_file_name=/mnt/us/subway/no_wifi.png
+  minimum_file_size_bytes=1000
+
+  remove_file_if_exists $temp_file_name
+
+  current_timestamp=$(date '+%s')
+  curl -H 'Cache-Control: no-cache' http://storage.googleapis.com/subwaykindledisplay/no_wifi.png?key=$current_timestamp > $temp_file_name
+
+  if [ -f "$temp_file_name" ]; then
+      actualsize=$(wc -c < "$temp_file_name")
+      if [ $actualsize -ge $minimum_file_size_bytes ]; then
+          remove_file_if_exists $actual_file_name
+          mv $temp_file_name $actual_file_name
+      fi
+  fi
+}
+
 partially_refresh_screen() {
   file_name=$1
-  eips -g $file_name
+  minimum_file_size_bytes=1000
+
+  # If file exists
+  if [ -f file_name ]; then
+      actualsize=$(wc -c < "$file_name")
+      # If the file is large enough
+      if [ $actualsize -ge $minimum_file_size_bytes ]; then
+          eips -g $file_name
+          return
+      fi
+  fi
+
+  show_no_wifi
 }
 
 # -f causes a full image refresh
 # -g indicates the image is a jpg/png. -b for bitmap images
 fully_refresh_screen() {
   file_name=$1
-  eips -f -g $file_name
+  minimum_file_size_bytes=1000
+
+  # If file exists
+  if [ -f file_name ]; then
+      actualsize=$(wc -c < "$file_name")
+      # If the file is large enough
+      if [ $actualsize -ge $minimum_file_size_bytes ]; then
+          eips -f -g $file_name
+          return
+      fi
+  fi
+
+  show_no_wifi
+}
+
+show_no_wifi() {
+  eips -f -g no_wifi.png
 }
 
 enable_wifi() {
@@ -89,6 +136,7 @@ download_image image2.png http://storage.googleapis.com/subwaykindledisplay/imag
 download_image image3.png http://storage.googleapis.com/subwaykindledisplay/image3.png
 download_image image4.png http://storage.googleapis.com/subwaykindledisplay/image4.png
 update_this_file
+update_no_wifi_logo
 #disable_wifi
 
 fully_refresh_screen image0.png
