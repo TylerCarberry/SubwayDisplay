@@ -9,7 +9,7 @@ import utils
 
 
 MAX_ALERTS_TO_SHOW = 5
-MAX_ALERT_LINE_LENGTH = 23
+MAX_ALERT_LINE_LENGTH = 20
 
 # Distance between the title and subtitle vertically
 SUBTITLE_MARGIN = 75
@@ -35,7 +35,7 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file=OUTPU
     draw = ImageDraw.Draw(img)
 
     is_active_alert = len(top_alerts) > 0 or len(bottom_alerts) > 0
-    text_x_position = 320 if is_active_alert else 250
+    text_x_position = 300 if is_active_alert else 250
     draw.text((text_x_position, 20), titles[0], BLACK_COLOR, font=BIG_FONT)
     draw.text((text_x_position, 20+SUBTITLE_MARGIN), subtitles[0], BLACK_COLOR, font=SMALL_FONT)
 
