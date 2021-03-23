@@ -45,8 +45,11 @@ update_this_file() {
     if [ $actualsize -ge $minimum_file_size_bytes ]; then
       remove_file_if_exists $actual_file_name
       mv $temp_file_name $actual_file_name
+    else
+      restart_wifi
     fi
-
+  else
+    restart_wifi
   fi
 }
 
@@ -105,8 +108,14 @@ disable_wifi() {
   lipc-set-prop com.lab126.cmd wirelessEnable 0
 }
 
+restart_wifi() {
+  disable_wifi
+  sleep 30
+  enable_wifi
+}
+
 # Reboot the device every day at 4 AM
-currenttime=$(date +%H:%M)
+current_time=$(date +%H:%M)
 
 cd "$(dirname "$0")" || exit
 #enable_screensaver
@@ -137,6 +146,6 @@ partially_refresh_screen image3.png
 sleep 60
 partially_refresh_screen image4.png
 
-if [ "$currenttime" = "04:00" ]; then
+if [ "$current_time" = "04:00" ]; then
   reboot
 fi
