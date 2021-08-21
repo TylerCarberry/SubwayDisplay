@@ -84,4 +84,4 @@ jobs:
     - name: Deploy to Google Cloud Run
       run: |
         cd server
-        gcloud beta run deploy helloworld --image gcr.io/subwaydisplay/helloworld --platform managed --allow-unauthenticated --region us-east1 --memory 192Mi --cpu 1 --min-instances 0 --max-instances 1
+        gcloud beta run deploy helloworld --image gcr.io/subwaydisplay/helloworld --platform managed --allow-unauthenticated --region us-east1 --memory 256Mi --cpu 1 --min-instances 0 --max-instances 1
