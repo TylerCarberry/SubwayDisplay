@@ -25,3 +25,15 @@ def get_current_time():
     if current_time is None:
         return time.time()
     return current_time
+
+
+def remove_from_string(string, items):
+    for item in items:
+        string = string.replace(item, " ")
+    return string
+
+
+def remove_duplicates_preserve_order(items):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in items if not (x in seen or seen_add(x))]

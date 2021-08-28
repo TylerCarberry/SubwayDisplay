@@ -32,19 +32,24 @@ def get_alerts_for_line(line, include_weekend_service=False):
                     important_alert = True
                     break
             if important_alert:
-                text = str(alert.header_text.translation).replace('text: ', "").replace('language: "EN"', "").replace('language: "en"', "").replace("\n", "")[2: -2]
+                text = utils.remove_from_string(
+                    str(alert.header_text.translation),
+                    ['text: ', 'language: "EN"', 'language: "en"', "\n", "\\n", "<br>", "</br>", "<b>", "</b>"]
+                )
+
                 if (include_weekend_service or (text.lower() != "weekend service") and (text.lower() != "weekday service")):
                     try:
                         upper_case = max(re.findall('[A-Z ]+[ \]]', text), key=len)
                     except:
                         upper_case = ""
+                    print("uppercase", upper_case)
                     if upper_case.endswith("]"):
                         upper_case = upper_case[:-1]
                     if len(upper_case.strip()) > 4:
                         output.append(upper_case.title().strip())
                     else:
                         output.append(text.strip())
-    return output
+    return utils.remove_duplicates_preserve_order(output)
 
 
 def is_alert_active(alert):
