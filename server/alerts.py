@@ -34,7 +34,7 @@ def get_alerts_for_line(line, include_weekend_service=False):
             if important_alert:
                 text = utils.remove_from_string(
                     str(alert.header_text.translation),
-                    ['text: ', 'language: "EN"', 'language: "en"', "\n", "\\n", "<br>", "</br>", "<b>", "</b>", '"', "[", "]"]
+                    ['text: ', 'language: "EN"', 'language: "en"', "\n", "\\n", "<br>", "</br>", "<b>", "</b>", '"']
                 )
 
                 if (include_weekend_service or (text.lower() != "weekend service") and (text.lower() != "weekday service")):
