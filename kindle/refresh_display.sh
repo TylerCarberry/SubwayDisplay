@@ -127,11 +127,11 @@ enable_wifi
 # It usually takes 20 seconds
 sleep 30
 
-download_image image0.png http://storage.googleapis.com/subwaykindledisplay/image0.png
-download_image image1.png http://storage.googleapis.com/subwaykindledisplay/image1.png
-download_image image2.png http://storage.googleapis.com/subwaykindledisplay/image2.png
-download_image image3.png http://storage.googleapis.com/subwaykindledisplay/image3.png
-download_image image4.png http://storage.googleapis.com/subwaykindledisplay/image4.png
+download_image image0.png http://f002.backblazeb2.com/file/subwaydisplay/output.png
+download_image image1.png http://f002.backblazeb2.com/file/subwaydisplay/output.png
+download_image image2.png http://f002.backblazeb2.com/file/subwaydisplay/output.png
+download_image image3.png http://f002.backblazeb2.com/file/subwaydisplay/output.png
+download_image image4.png http://f002.backblazeb2.com/file/subwaydisplay/output.png
 update_this_file
 update_no_wifi_logo
 #disable_wifi
