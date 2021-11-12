@@ -3,11 +3,17 @@ import os
 from google.cloud import storage
 from google.oauth2 import service_account
 
+import utils
+
 BUCKET_NAME = "subwaykindledisplay"
 
 
 def authenticate_storage_client():
-    key = json.loads(os.environ["SUBWAY_DISPLAY_GOOGLE_KEY"])
+    if utils.is_running_on_pi():
+        with open('/home/pi/keys/SUBWAY_DISPLAY_GOOGLE_KEY.json') as f:
+            key = json.load(f)
+    else:
+        key = json.loads(os.environ["SUBWAY_DISPLAY_GOOGLE_KEY"])
     storage_credentials = service_account.Credentials.from_service_account_info(key)
     return storage.Client(credentials=storage_credentials)
 

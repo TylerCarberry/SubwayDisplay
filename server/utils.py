@@ -1,5 +1,6 @@
 import json
 import time
+import os
 
 
 current_time = None
@@ -37,3 +38,12 @@ def remove_duplicates_preserve_order(items):
     seen = set()
     seen_add = seen.add
     return [x for x in items if not (x in seen or seen_add(x))]
+
+
+def delete_file_if_exists(file_name):
+    if os.path.exists(file_name):
+        os.remove(file_name)
+
+
+def is_running_on_pi():
+    return os.getenv('PI') is not None

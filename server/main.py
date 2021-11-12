@@ -21,6 +21,7 @@ app = Flask(__name__)
 nltk.download('punkt')
 
 
+
 def make_also_text(timestamps):
     if len(timestamps) == 0:
         return "No upcoming trains"
@@ -80,9 +81,18 @@ def hello_world():
         print(photo_num)
         make_image_for_timestamp(current_time + photo_num * 60)
         gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
-        #gcloud.upload_blob("output.png", "original_image{}.png".format(photo_num))
     logs.post_to_discord(datetime.now().strftime("%B %d %Y - %H:%M:%S"), "", "output.png")
     return send_file("output2.png", cache_timeout=1)
+
+def run_locally():
+    current_time = time.time()
+    for photo_num in range(5, -1, -1):
+        print(photo_num)
+        make_image_for_timestamp(current_time + photo_num * 60)
+        file_name = "image{}.png".format(photo_num)
+        utils.delete_file_if_exists(file_name)
+        os.rename("output2.png", file_name)
+    logs.post_to_discord(datetime.now().strftime("%B %d %Y - %H:%M:%S"), "", "output.png")
 
 
 def make_image_for_timestamp(timestamp):
@@ -91,4 +101,9 @@ def make_image_for_timestamp(timestamp):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    if utils.is_running_on_pi():
+        print("Running on raspberry pi, generating images")
+        run_locally()
+    else:
+        print("Running in the cloud, launching flask app")
+        app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
