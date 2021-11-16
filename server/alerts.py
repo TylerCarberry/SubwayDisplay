@@ -14,7 +14,11 @@ UPCOMING_ALERT_SECONDS = 60 * 60
 def get_alerts_for_line(line, include_weekend_service=False):
     output = []
 
-    r = requests.get("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts", headers = {"x-api-key": MTA_API_KEY})
+    try:
+        r = requests.get("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts", headers = {"x-api-key": MTA_API_KEY})
+    except ConnectionError as e:
+        print(e)
+        return []
 
     feed = gtfs_realtime_pb2.FeedMessage()
     feed.ParseFromString(r.content)
