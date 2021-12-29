@@ -1,0 +1,7 @@
+PI=true
+MTA_API_KEY=
+DISCORD_WEBHOOK_ID=
+DISCORD_WEBHOOK_TOKEN=
+
+#@reboot /usr/bin/sh /home/pi/start_server.sh &
+*/1 * * * * /usr/bin/sh /home/pi/run_subway.sh >> /home/pi/log.txt 2>&1
