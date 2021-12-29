@@ -37,7 +37,7 @@ def get_alerts_for_line(line, include_weekend_service=False):
                     break
             if important_alert:
                 text = utils.remove_from_string(
-                    str(alert.header_text.translation),
+                    alert.header_text.translation[0].text,
                     ['text: ', 'language: "EN"', 'language: "en"', "\n", "\\n", "<br>", "</br>", "<b>", "</b>", '"']
                 )
 

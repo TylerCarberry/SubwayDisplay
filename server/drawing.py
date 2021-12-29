@@ -97,6 +97,7 @@ def get_line_icon(line_letter, icon_dimensions):
 
 
 def process_alert(alert_string):
+    alert_string = alert_string.replace("\\", "")
     sentences = sent_tokenize(alert_string)
     if len(sentences) == 0:
         return ""
