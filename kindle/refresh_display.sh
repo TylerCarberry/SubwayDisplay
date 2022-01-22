@@ -127,24 +127,22 @@ enable_wifi
 # It usually takes 20 seconds
 sleep 30
 
-download_image image0.png 192.168.0.101:8081/image0.png
-download_image image1.png 192.168.0.101:8081/image1.png
-download_image image2.png 192.168.0.101:8081/image2.png
-download_image image3.png 192.168.0.101:8081/image3.png
-download_image image4.png 192.168.0.101:8081/image4.png
+
+for NUM in 0 1 2 3 4 5 6 7 8 9
+do
+  download_image image$NUM.png 192.168.0.101:8081/image$NUM.png
+done
+
 update_this_file
 update_no_wifi_logo
 #disable_wifi
 
 fully_refresh_screen image0.png
-sleep 60
-partially_refresh_screen image1.png
-sleep 60
-partially_refresh_screen image2.png
-sleep 60
-partially_refresh_screen image3.png
-sleep 60
-partially_refresh_screen image4.png
+for NUM in 1 2 3 4 5 6 7 8 9
+do
+  sleep 30
+  partially_refresh_screen image$NUM.png
+done
 
 if [ "$current_time" = "04:00" ]; then
   reboot
