@@ -80,15 +80,15 @@ def hello_world():
     for photo_num in range(9, -1, -1):
         print(photo_num)
         make_image_for_timestamp(current_time + photo_num * 30)
-        #gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
+        gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
     logs.post_to_discord(datetime.now().strftime("%B %d %Y - %H:%M:%S"), "", "output.png")
     return send_file("output2.png", cache_timeout=1)
 
 def run_locally():
     current_time = time.time()
-    for photo_num in range(5, -1, -1):
+    for photo_num in range(9, -1, -1):
         print(photo_num)
-        make_image_for_timestamp(current_time + photo_num * 60)
+        make_image_for_timestamp(current_time + photo_num * 30)
         file_name = "image{}.png".format(photo_num)
         utils.delete_file_if_exists(file_name)
         os.rename("output2.png", file_name)
