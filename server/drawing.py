@@ -5,8 +5,8 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from nltk import sent_tokenize
 
-import utils
-
+from server import utils
+from server.model.line import Line
 
 MAX_ALERTS_TO_SHOW = 5
 MAX_ALERT_LINE_LENGTH = 20
@@ -16,15 +16,20 @@ SUBTITLE_MARGIN = 75
 
 BLACK_COLOR = (0, 0, 0)
 
-BIG_FONT = ImageFont.truetype('fonts/Roboto-Medium.ttf', 52)
-SMALL_FONT = ImageFont.truetype('fonts/Roboto-Regular.ttf', 30)
-ALERT_FONT = ImageFont.truetype('fonts/RobotoCondensed-Regular.ttf', 28)
+FONT_FOLDER = "res/fonts"
+
+BIG_FONT = ImageFont.truetype(f"{FONT_FOLDER}/Roboto-Medium.ttf", 52)
+SMALL_FONT = ImageFont.truetype(f"{FONT_FOLDER}/Roboto-Regular.ttf", 30)
+ALERT_FONT = ImageFont.truetype(f"{FONT_FOLDER}/RobotoCondensed-Regular.ttf", 28)
 
 BACKGROUND_FILE = "res/background.png"
 OUTPUT_FILE = "output.png"
 
 
-def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file=OUTPUT_FILE):
+def create_image(top_train: Line, bottom_train: Line, output_file=OUTPUT_FILE):
+    top_alerts = top_train.alerts
+    bottom_alerts = bottom_train.alerts
+
     print(top_alerts, bottom_alerts)
 
     top_alerts = process_alerts(top_alerts)
@@ -33,6 +38,20 @@ def create_image(top_alerts, bottom_alerts, titles, subtitles, output_file=OUTPU
     img = Image.open(BACKGROUND_FILE)
     draw_line_icons(img, len(top_alerts), len(bottom_alerts))
     draw = ImageDraw.Draw(img)
+
+    titles = [
+        top_train.uptown.get_header_text(),
+        top_train.downtown.get_header_text(),
+        bottom_train.uptown.get_header_text(),
+        bottom_train.downtown.get_header_text()
+    ]
+
+    subtitles = [
+        top_train.uptown.get_also_text(),
+        top_train.downtown.get_also_text(),
+        bottom_train.uptown.get_also_text(),
+        bottom_train.downtown.get_also_text()
+    ]
 
     is_active_alert = len(top_alerts) > 0 or len(bottom_alerts) > 0
     text_x_position = 300 if is_active_alert else 250

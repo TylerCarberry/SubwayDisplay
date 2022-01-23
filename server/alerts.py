@@ -60,12 +60,12 @@ def is_alert_active(alert):
     try:
         if alert.active_period.end < utils.get_current_time():
             return False
-    except:
+    except Exception:
         pass
     try:
         if alert.active_period.start > utils.get_current_time() + UPCOMING_ALERT_SECONDS:
             return False
-    except:
+    except Exception:
         pass
     return True
 

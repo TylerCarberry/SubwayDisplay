@@ -1,19 +1,21 @@
 import os
 import time
+from datetime import datetime
+from typing import Dict
 
 import nltk
+from flask import Flask
+from flask import send_file
+
 import alerts
 import drawing
-from datetime import datetime
-import utils
-
 import format_for_kindle
-import gcloud
-import mta
 import logs
-from utils import get_minutes_until_arrival
-from flask import send_file
-from flask import Flask
+import mta
+import utils
+from server.model.arrival_times import ArrivalTimes
+from server.model.direction import Direction
+from server.model.line import Line
 
 #from server import test_drawing
 
@@ -21,68 +23,37 @@ app = Flask(__name__)
 nltk.download('punkt')
 
 
-
-def make_also_text(timestamps):
-    if len(timestamps) == 0:
-        return "No upcoming trains"
-    if len(timestamps) == 1:
-        return ""
-
-    times = []
-    for timestamp in timestamps[1:5]:
-        time_obj = datetime.fromtimestamp(timestamp)
-        times.append(time_obj.strftime("%-I:%M"))
-    return "Also " + ", ".join(times)
-
-
-def get_header_text(direction_name, upcoming_timestamps):
-    if len(upcoming_timestamps) == 0:
-        return direction_name
-    return "{} - {} {}".format(
-        direction_name,
-        get_minutes_until_arrival(upcoming_timestamps[0]),
-        "min" if get_minutes_until_arrival(upcoming_timestamps[0]) == 1 else "mins"
-    )
-
-
 def generate_image():
-    output = mta.fetch_mta()
+    arrival_times: Dict[str, ArrivalTimes] = mta.fetch_mta()
 
     config = utils.get_config_file()
 
-    upcoming_arrival_times = []
-    for line in config["lines"]:
-        upcoming_arrival_times.append(sorted(output[line["stop_id"]+"N"]))
-        upcoming_arrival_times.append(sorted(output[line["stop_id"]+"S"]))
+    top_train = build_line_from_config(config["lines"][0], arrival_times)
+    bottom_train = build_line_from_config(config["lines"][1], arrival_times)
 
-    subtitles = []
-    for item in upcoming_arrival_times:
-        subtitles.append(make_also_text(item))
-
-    titles = []
-    for index, line in enumerate(config["lines"]):
-        titles.append(get_header_text(line["uptown_name"], upcoming_arrival_times[index*2]))
-        titles.append(get_header_text(line["downtown_name"], upcoming_arrival_times[index*2 + 1]))
-
-    drawing.create_image(
-        alerts.get_alerts_for_line(config["lines"][0]["name"], include_weekend_service=True),
-        alerts.get_alerts_for_line(config["lines"][1]["name"], include_weekend_service=True),
-        titles,
-        subtitles
-    )
-
+    drawing.create_image(top_train, bottom_train)
     format_for_kindle.format_for_kindle()
 
 
+def build_line_from_config(line_config: Dict, arrival_times):
+    return Line(
+        line_config["name"],
+        Direction(line_config["uptown_name"], arrival_times[line_config["stop_id"] + "N"].arrival_times),
+        Direction(line_config["downtown_name"], arrival_times[line_config["stop_id" + "S"]].arrival_times),
+        alerts.get_alerts_for_line(line_config["name"])
+    )
+
+
 @app.route('/')
-def hello_world():
+def run_gcloud():
     current_time = time.time()
     for photo_num in range(9, -1, -1):
         print(photo_num)
         make_image_for_timestamp(current_time + photo_num * 30)
-        gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
+        #gcloud.upload_blob("output2.png", "image{}.png".format(photo_num))
     logs.post_to_discord(datetime.now().strftime("%B %d %Y - %H:%M:%S"), "", "output.png")
     return send_file("output2.png", cache_timeout=1)
+
 
 def run_locally():
     current_time = time.time()

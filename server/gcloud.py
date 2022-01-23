@@ -18,7 +18,7 @@ def authenticate_storage_client():
     return storage.Client(credentials=storage_credentials)
 
 
-def upload_blob( source_file_name, destination_blob_name):
+def upload_blob(source_file_name, destination_blob_name):
     storage_client = authenticate_storage_client()
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(destination_blob_name)
