@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from server.model.direction import Direction
+from model.direction import Direction
 
 
 @dataclass

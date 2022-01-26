@@ -5,7 +5,7 @@ from typing import Dict
 import requests
 from google.transit import gtfs_realtime_pb2
 
-from server.model.arrival_times import ArrivalTimes
+from model.arrival_times import ArrivalTimes
 from utils import get_minutes_until_arrival
 
 MTA_API_KEY = os.environ["MTA_API_KEY"]

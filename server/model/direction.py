@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 
-from server.utils import get_minutes_until_arrival
+from utils import get_minutes_until_arrival
 
 
 @dataclass

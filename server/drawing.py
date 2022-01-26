@@ -5,8 +5,8 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from nltk import sent_tokenize
 
-from server import utils
-from server.model.line import Line
+import utils
+from model.line import Line
 
 MAX_ALERTS_TO_SHOW = 5
 MAX_ALERT_LINE_LENGTH = 20

@@ -13,9 +13,9 @@ import format_for_kindle
 import logs
 import mta
 import utils
-from server.model.arrival_times import ArrivalTimes
-from server.model.direction import Direction
-from server.model.line import Line
+from model.arrival_times import ArrivalTimes
+from model.direction import Direction
+from model.line import Line
 
 #from server import test_drawing
 
