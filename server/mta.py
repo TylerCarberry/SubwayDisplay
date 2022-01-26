@@ -28,7 +28,7 @@ def fetch_mta() -> Dict[str, ArrivalTimes]:
         ArrivalTimes(second_stop_id[0], second_stop_id[1:], "S"),
     ]
 
-    result = {item: item.get_stop_id() for item in lines}
+    result = {item.get_stop_id(): item for item in lines}
     line_letters = set([line.line_letter.lower() for line in lines])
 
     for line in line_letters:

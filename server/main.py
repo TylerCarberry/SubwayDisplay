@@ -39,7 +39,7 @@ def build_line_from_config(line_config: Dict, arrival_times):
     return Line(
         line_config["name"],
         Direction(line_config["uptown_name"], arrival_times[line_config["stop_id"] + "N"].arrival_times),
-        Direction(line_config["downtown_name"], arrival_times[line_config["stop_id" + "S"]].arrival_times),
+        Direction(line_config["downtown_name"], arrival_times[line_config["stop_id"] + "S"].arrival_times),
         alerts.get_alerts_for_line(line_config["name"])
     )
 
