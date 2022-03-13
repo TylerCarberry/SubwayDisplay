@@ -2,8 +2,7 @@
 Displays subway arrival times on a Kindle Touch
 
 
-<img width="600" alt="Example screenshot" src="https://user-images.githubusercontent.com/6628497/97786594-03011380-1b83-11eb-8dd2-4eaa0f7516c0.png">
-
+<img width="400" alt="Without frame" src="https://user-images.githubusercontent.com/6628497/158081248-ed2de740-1d91-4238-b835-28ccdffb461d.jpg"> <img width="400" alt="With frame" src="https://user-images.githubusercontent.com/6628497/158081268-eeabc0e9-fbc7-44aa-93c8-01c449148b56.jpg">
 
 
 Setting up the Kindle
