@@ -130,7 +130,7 @@ sleep 30
 
 for NUM in 0 1 2 3 4 5 6 7 8 9
 do
-  download_image image$NUM.png 192.168.0.101:8081/image$NUM.png
+  download_image image$NUM.png 192.168.1.101:8081/image$NUM.png
 done
 
 update_this_file
